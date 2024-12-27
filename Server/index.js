@@ -2,18 +2,18 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const PhoneBook = require('./model/phonebook');
-require('dotenv').config(); // Load .env file
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = 8001;
+// Hardcoded MongoDB URI and Port
+const DB = 'mongodb://127.0.0.1:27017/phonebook'; // Replace with your MongoDB URI
+const PORT = process.env.PORT || 8001;
 
 // Check if MONGODB_URI is provided
-const DB = process.env.MONGODB_URI;
 if (!DB) {
-    console.error('Error: MONGODB_URI is not defined in .env file');
+    console.error('Error: MongoDB URI is not defined');
     process.exit(1); // Exit if no DB URI is provided
 }
 
