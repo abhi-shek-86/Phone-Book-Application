@@ -17,7 +17,7 @@ function App() {
   // Fetch all phone numbers from the server
   const getPhoneNumbers = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/get-phone');
+      const response = await axios.get('http://localhost:8001/get-phone');
       setPhoneNumbers(response.data.data.phoneNumbers);
     } catch (err) {
       console.error(err);
@@ -30,7 +30,7 @@ function App() {
       if (updateId) {
         // Update phone number
         try {
-          await axios.patch(`http://localhost:8000/update-phone/${updateId}`, {
+          await axios.patch(`http://localhost:8001/update-phone/${updateId}`, {
             name,
             phone,
           });
@@ -44,7 +44,7 @@ function App() {
       } else {
         // Add phone number
         try {
-          await axios.post('http://localhost:8000/add-phone', {
+          await axios.post('http://localhost:8001/add-phone', {
             name,
             phone,
           });
@@ -61,7 +61,7 @@ function App() {
   // Delete a phone number by id
   const deletePhoneNumber = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete-phone/${id}`);
+      await axios.delete(`http://localhost:8001/delete-phone/${id}`);
       getPhoneNumbers();
     } catch (err) {
       console.error(err);
