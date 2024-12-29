@@ -7,18 +7,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Hardcoded MongoDB URI and Port
-const DB = 'mongodb://127.0.0.1:27017/phonebook'; // Replace with your MongoDB URI
+// Replace with your MongoDB Atlas URI
+const DB = 'mongodb+srv://vasamsettiabhi13:abhishek@cluster0.mcqtu.mongodb.net/';
 const PORT = process.env.PORT || 8001;
 
-// Check if MONGODB_URI is provided
-if (!DB) {
-    console.error('Error: MongoDB URI is not defined');
-    process.exit(1); // Exit if no DB URI is provided
-}
-
-// Connect to MongoDB
-mongoose.connect(DB)
+// Connect to MongoDB Atlas
+mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log('Database connected successfully');
     })
