@@ -30,7 +30,7 @@ function App() {
       if (updateId) {
         // Update phone number
         try {
-          await axios.patch(`https://phone-book-skdf.onrender.com/${updateId}`, {
+          await axios.patch(`https://phone-book-skdf.onrender.com/update-phone/${updateId}`, {
             name,
             phone,
           });
@@ -61,7 +61,7 @@ function App() {
   // Delete a phone number by id
   const deletePhoneNumber = async (id) => {
     try {
-      await axios.delete(`https://phone-book-skdf.onrender.com/${id}`);
+      await axios.delete(`https://phone-book-skdf.onrender.com/delete-phone/${id}`);
       getPhoneNumbers();
     } catch (err) {
       console.error(err);
