@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; //
-import './App.css'
+import axios from 'axios';
+import './App.css';
 
 function App() {
   // Define state variables
@@ -8,6 +8,7 @@ function App() {
   const [phone, setPhone] = useState('');
   const [phoneNumbers, setPhoneNumbers] = useState([]);
   const [updateId, setUpdateId] = useState(null);
+  const [error, setError] = useState('');
 
   // Fetch phone numbers on mount
   useEffect(() => {
@@ -21,6 +22,7 @@ function App() {
       setPhoneNumbers(response.data.data.phoneNumbers);
     } catch (err) {
       console.error(err);
+      setError('Failed to load phone numbers. Please try again.');
     }
   };
 
@@ -40,6 +42,7 @@ function App() {
           getPhoneNumbers();
         } catch (err) {
           console.error(err);
+          setError('Failed to update phone number.');
         }
       } else {
         // Add phone number
@@ -53,8 +56,11 @@ function App() {
           getPhoneNumbers();
         } catch (err) {
           console.error(err);
+          setError('Failed to add phone number.');
         }
       }
+    } else {
+      setError('Both name and phone number are required.');
     }
   };
 
@@ -65,6 +71,7 @@ function App() {
       getPhoneNumbers();
     } catch (err) {
       console.error(err);
+      setError('Failed to delete phone number.');
     }
   };
 
@@ -84,8 +91,12 @@ function App() {
 
   // Render the component
   return (
-    <div>
+    <div className="container">
       <h1>Phone Book</h1>
+
+      {/* Error Message */}
+      {error && <div className="error-message">{error}</div>}
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -105,8 +116,17 @@ function App() {
           onChange={(e) => setPhone(e.target.value)}
         />
         <button type="submit">{updateId ? 'Update' : 'Add'}</button>
-        {updateId && <button onClick={cancelUpdate}>Cancel</button>}
+        {updateId && (
+          <button
+            type="button"
+            onClick={cancelUpdate}
+            className="cancel-btn"
+          >
+            Cancel
+          </button>
+        )}
       </form>
+
       <table>
         <thead>
           <tr>
