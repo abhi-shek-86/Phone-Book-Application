@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -7,23 +8,20 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Replace with your MongoDB Atlas URI
-const DB = 'mongodb+srv://vasamsettiabhi13:abhishek@cluster0.mcqtu.mongodb.net/';
+const DB = process.env.MONGO_URI;
 const PORT = process.env.PORT || 8001;
 
-// Connect to MongoDB Atlas
-mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log('Database connected successfully');
-    })
-    .catch(err => {
-        console.error('Error connecting to database:', err.message);
-        process.exit(1); // Exit on failure to connect to the database
-    });
+mongoose.connect(DB)
+  .then(() => {
+    console.log('Database connected successfully');
+  })
+  .catch(err => {
+    console.error('Error connecting to database:', err.message);
+    process.exit(1);
+  });
 
-// Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on PORT ${PORT}...`);
+  console.log(`Server is running on PORT ${PORT}...`);
 });
 
 // Add a phone number
