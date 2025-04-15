@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './App.css';
+import axios from 'axios'; //
+import './App.css'
 
 function App() {
   // Define state variables
@@ -8,7 +8,6 @@ function App() {
   const [phone, setPhone] = useState('');
   const [phoneNumbers, setPhoneNumbers] = useState([]);
   const [updateId, setUpdateId] = useState(null);
-  const [error, setError] = useState('');
 
   // Fetch phone numbers on mount
   useEffect(() => {
@@ -18,11 +17,10 @@ function App() {
   // Fetch all phone numbers from the server
   const getPhoneNumbers = async () => {
     try {
-      const response = await axios.get('https://phone-book-application-77i2.onrender.com');
+      const response = await axios.get('https://phone-book-application-4rff.onrender.com/get-phone');
       setPhoneNumbers(response.data.data.phoneNumbers);
     } catch (err) {
       console.error(err);
-      setError('Failed to load phone numbers. Please try again.');
     }
   };
 
@@ -32,7 +30,7 @@ function App() {
       if (updateId) {
         // Update phone number
         try {
-          await axios.patch(`https://phone-book-skdf.onrender.com/update-phone/${updateId}`, {
+          await axios.patch(`https://phone-book-application-4rff.onrender.com/update-phone/${updateId}`, {
             name,
             phone,
           });
@@ -42,12 +40,11 @@ function App() {
           getPhoneNumbers();
         } catch (err) {
           console.error(err);
-          setError('Failed to update phone number.');
         }
       } else {
         // Add phone number
         try {
-          await axios.post('https://phone-book-skdf.onrender.com/add-phone', {
+          await axios.post('https://phone-book-application-4rff.onrender.com/add-phone', {
             name,
             phone,
           });
@@ -56,22 +53,18 @@ function App() {
           getPhoneNumbers();
         } catch (err) {
           console.error(err);
-          setError('Failed to add phone number.');
         }
       }
-    } else {
-      setError('Both name and phone number are required.');
     }
   };
 
   // Delete a phone number by id
   const deletePhoneNumber = async (id) => {
     try {
-      await axios.delete(`https://phone-book-skdf.onrender.com/delete-phone/${id}`);
+      await axios.delete(`https://phone-book-application-4rff.onrender.com/delete-phone/${id}`);
       getPhoneNumbers();
     } catch (err) {
       console.error(err);
-      setError('Failed to delete phone number.');
     }
   };
 
@@ -91,12 +84,8 @@ function App() {
 
   // Render the component
   return (
-    <div className="container">
+    <div>
       <h1>Phone Book</h1>
-
-      {/* Error Message */}
-      {error && <div className="error-message">{error}</div>}
-
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -116,17 +105,8 @@ function App() {
           onChange={(e) => setPhone(e.target.value)}
         />
         <button type="submit">{updateId ? 'Update' : 'Add'}</button>
-        {updateId && (
-          <button
-            type="button"
-            onClick={cancelUpdate}
-            className="cancel-btn"
-          >
-            Cancel
-          </button>
-        )}
+        {updateId && <button onClick={cancelUpdate}>Cancel</button>}
       </form>
-
       <table>
         <thead>
           <tr>
