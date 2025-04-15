@@ -18,7 +18,7 @@ function App() {
   // Fetch all phone numbers from the server
   const getPhoneNumbers = async () => {
     try {
-      const response = await axios.get('https://phone-book-skdf.onrender.com/get-phone');
+      const response = await axios.get('https://phone-book-application-77i2.onrender.com');
       setPhoneNumbers(response.data.data.phoneNumbers);
     } catch (err) {
       console.error(err);
