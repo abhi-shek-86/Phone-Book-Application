@@ -3,19 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import mongoose from 'mongoose';
-require('dotenv').config();
-
-const DB = process.env.MONGO_URI;
-
-mongoose.connect(DB)
-  .then(() => {
-    console.log('Database connected successfully');
-  })
-  .catch(err => {
-    console.error('Error connecting to database:', err.message);
-    process.exit(1);
-  });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

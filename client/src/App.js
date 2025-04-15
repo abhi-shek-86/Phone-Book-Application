@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
-import dotenv from 'dotenv';
-dotenv.config();
 
 function App() {
   // Define state variables
