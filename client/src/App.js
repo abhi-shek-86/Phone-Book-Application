@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; //
-import './App.css'
+import axios from 'axios';
+import './App.css';
 
 function App() {
   // Define state variables
@@ -8,6 +8,9 @@ function App() {
   const [phone, setPhone] = useState('');
   const [phoneNumbers, setPhoneNumbers] = useState([]);
   const [updateId, setUpdateId] = useState(null);
+
+  // Base URL from environment variable
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
   // Fetch phone numbers on mount
   useEffect(() => {
@@ -17,7 +20,7 @@ function App() {
   // Fetch all phone numbers from the server
   const getPhoneNumbers = async () => {
     try {
-      const response = await axios.get('https://phone-book-application-4rff.onrender.com/get-phone');
+      const response = await axios.get(`${API_BASE_URL}/get-phone`);
       setPhoneNumbers(response.data.data.phoneNumbers);
     } catch (err) {
       console.error(err);
@@ -30,7 +33,7 @@ function App() {
       if (updateId) {
         // Update phone number
         try {
-          await axios.patch(`https://phone-book-application-4rff.onrender.com/update-phone/${updateId}`, {
+          await axios.patch(`${API_BASE_URL}/update-phone/${updateId}`, {
             name,
             phone,
           });
@@ -44,7 +47,7 @@ function App() {
       } else {
         // Add phone number
         try {
-          await axios.post('https://phone-book-application-4rff.onrender.com/add-phone', {
+          await axios.post(`${API_BASE_URL}/add-phone`, {
             name,
             phone,
           });
@@ -61,7 +64,7 @@ function App() {
   // Delete a phone number by id
   const deletePhoneNumber = async (id) => {
     try {
-      await axios.delete(`https://phone-book-application-4rff.onrender.com/delete-phone/${id}`);
+      await axios.delete(`${API_BASE_URL}/delete-phone/${id}`);
       getPhoneNumbers();
     } catch (err) {
       console.error(err);
